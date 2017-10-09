@@ -49,7 +49,7 @@ font: sans-serif
 .tocify .tocify-header .active {
   color: black;
   Font-Family: sans-serif;
-  background: gray;
+  background: #c0c0c0;
 }
 
 body {
