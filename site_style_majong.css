@@ -13,18 +13,14 @@ h3 {
   padding-top: 15px;
 }
 
-footer {
-  margin-top: 20px;
-}
-
 dt {
   clear: left;
-  float: left;
+  float: clear;
   width: 15%;
   font-weight: bold;
-  text-align: right;
   padding: 3px 15px 3px 0;
 }
+
 dd {
   margin: 0 0 0 20%;
   padding-top: 3px;
@@ -59,9 +55,7 @@ a {
   color:#FF69B4;
 }
 
-
 img{
-float: none;
 margin: 10px;
 border: 1px solid gray ;
 }

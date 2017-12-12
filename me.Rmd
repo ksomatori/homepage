@@ -48,3 +48,6 @@
 ksomatori[あっとまーく]psy.senshu-u.ac.jp
 
 ksomatori[あっとまーく]gmail.com
+
+<br />
+<p>Copyright &copy; 2017 Keita Somatori. All rights reserved </p>

@@ -15,3 +15,7 @@ Rのパッケージ群**tidyverse**内に入っている**dplyr**と**purrr**を
 
 [Stan Advent Calender 2017](https://qiita.com/advent-calendar/2017/stan)で投稿した記事です。
 麻雀データをモデリングし、麻雀の強さ(雀力)と運を分離しています。
+
+
+<br />
+<p>Copyright &copy; 2017 Keita Somatori. All rights reserved </p>
