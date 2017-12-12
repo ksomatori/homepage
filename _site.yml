@@ -21,4 +21,6 @@ output:
       collapse: false
     df_print: "kable"
     css: site_style.css
+    include:
+      after_body: footer.html
 output_dir: "docs"
