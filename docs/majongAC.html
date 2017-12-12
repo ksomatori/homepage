@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>ディリクレ麻雀モデル</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="site_style_majong.css" type="text/css" />
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 61px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+
+.section h2 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h3 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h4 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h5 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h6 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">杣取恵太</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="me.html">About Me</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li>
+  <a href="publications.html">Publications</a>
+</li>
+<li>
+  <a href="slides.html">Slides</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">ディリクレ麻雀モデル</h1>
+
+</div>
+
+
+<div id="麻雀とは" class="section level2">
+<h2>麻雀とは</h2>
+<p>みなさんは麻雀という競技をやったことがありますでしょうか。 麻雀というのは4人で卓を囲み、手元にある13枚の牌を元に、牌を引いてきたりいろいろして、なんかの役を上がったりなんだったりして、点数のやりとりをする競技です。</p>
+<p>詳しいことは「麻雀　ルール」とかで検索してください。</p>
+<p>今回の記事では、麻雀のデータを使ってモデリングしてみたいと思います。</p>
+<p>では、「麻雀のデータ」ってなんでしょう？</p>
+<p>私は麻雀が大好きなので、よく仲間内で麻雀を打ちます。 その際、半荘(麻雀における1ゲームの単位)ごとに結果を記録しています。 我々の場合、麻雀をする際にはおおよそ6半荘なり、8半荘なりをしています。 そして、その日の各半荘の得点を合計し、その日の勝者を決めています。 雀荘には記録用紙があるので、下の図のような感じになります。 下図の場合ですと左から2番目のプレイヤーが勝っています。</p>
+<p><br /></p>
+<div style="text-align: center;">
+<div class="figure">
+<img src="kiroku.jpg" />
+
+</div>
+</div>
+<p><br /></p>
+<p>多くの場合、負けた人が勝った人にご飯を奢ったり、まあいろいろあるのかもしれません。 いずれにしても、その日の勝者を決めてそれで終わり、という感じが多いと思います。</p>
+<p>私の場合は、それを記録として残し続けています。下の図のような感じです。</p>
+<div style="text-align: center;">
+<div class="figure">
+<img src="kiroku2.jpg" />
+
+</div>
+</div>
+<p><br /></p>
+<p>なぜこんなことをやっているのかというと、麻雀は運の要素が非常に強い競技だからです。</p>
+<p>ただ、もちろん運の要素が強いことは間違い無いのですが、技術が反映される余地も大いにあり、たくさんの半荘をこなせば、技術による差は明確に出てきます。</p>
+<p>というわけで、毎回の結果を記録として残し、本当は誰が強いのかを明らかにしよう、という発想でやっています。</p>
+</div>
+<div id="データから最強の雀士を探す" class="section level2">
+<h2>データから最強の雀士を探す</h2>
+<p>では、どういうデータがどれくらい溜まっているのか見ていきましょう。</p>
+<p>まずは、平均順位などの基本的な情報です。</p>
+<table style="width:85%;">
+<colgroup>
+<col width="23%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right"> </th>
+<th align="right">Player I</th>
+<th align="right">Player K</th>
+<th align="right">Player U</th>
+<th align="right">Player S</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right"><strong>半荘数</strong></td>
+<td align="right">135</td>
+<td align="right">135</td>
+<td align="right">135</td>
+<td align="right">135</td>
+</tr>
+<tr class="even">
+<td align="right"><strong>勝利数</strong></td>
+<td align="right">5</td>
+<td align="right">8</td>
+<td align="right">0</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="right"><strong>トップ回数</strong></td>
+<td align="right">36</td>
+<td align="right">44</td>
+<td align="right">20</td>
+<td align="right">35</td>
+</tr>
+<tr class="even">
+<td align="right"><strong>平均順位</strong></td>
+<td align="right">2.415</td>
+<td align="right">2.259</td>
+<td align="right">2.904</td>
+<td align="right">2.489</td>
+</tr>
+<tr class="odd">
+<td align="right"><strong>平均得点</strong></td>
+<td align="right">2.215</td>
+<td align="right">10.32</td>
+<td align="right">-13.38</td>
+<td align="right">0.8</td>
+</tr>
+<tr class="even">
+<td align="right"><strong>勝率</strong></td>
+<td align="right">0.2667</td>
+<td align="right">0.3259</td>
+<td align="right">0.1481</td>
+<td align="right">0.2593</td>
+</tr>
+<tr class="odd">
+<td align="right"><strong>連対率</strong></td>
+<td align="right">0.5333</td>
+<td align="right">0.6074</td>
+<td align="right">0.363</td>
+<td align="right">0.4741</td>
+</tr>
+</tbody>
+</table>
+<p>全部で135半荘、対局日数でいうと21回分のデータが溜まっています。</p>
+<p>勝利数というのはその日のトータルトップを取った回数です。 Player K氏とPlayer S氏が首位タイとなっていますね。</p>
+<p>麻雀は1位から4位までを取るので、平均順位は小さい方が強いです。 一方、得点(ポイント)は高い方が良いので、平均得点は高い方が強いと言えます。</p>
+<p>勝率は1位を取った半荘の割合、連対率は1位または2位を取った半荘の割合です。</p>
+<p>データを見る限り、トータルトップの回数ではなんとも言い難いですが、平均順位などのデータから、Player K氏の方が安定して勝っている印象がありますね。</p>
+<p>また、トータルトップの回数こそ少ないものの、Player I氏はPlayer S氏よりも安定した成績を残しています。今後に期待できるかもしれません。</p>
+<p>もちろん、最終的にはトップを取ることが大切ですので、Player S氏の存在も無視できません。</p>
+<p><br /></p>
+<div style="text-align: center;">
+<p><strong>要するに、これだけだと何とも言えません。</strong></p>
+</div>
+<p><br /></p>
+<p>また、各対局日の着順を時系列上にプロットすると、なかなか面白い特徴があります。</p>
+<p><img src="majongAC_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><br /></p>
+<p>初めの頃はPlayer K氏の連勝が目立ちますね。ところが、後半になってくるとPlayer S氏もそれなりに勝つようになってきますし、なによりPlayer I氏の成績が全体的に良くなってきている気がします。</p>
+<p>もちろん、みなさん麻雀の上達に向けていろいろ努力をしていると思いますので、技術の向上によっていろいろな変化があるんだと思います。 もしかすると、麻雀データは時系列データとして見るのが良いのかもしれませんね。</p>
+</div>
+<div id="stanでモデリングしよう" class="section level2">
+<h2>stanでモデリングしよう</h2>
+<p>これまでのデータだと、対局日によって勝者はだいぶ違いますし、どのデータを軸に見るのかによって誰が強そうかも変わってきます。</p>
+<p>というのも、誰が強いのかを判断するのに、データがまだまだ十分ではありません。 私が尊敬してやまない女流プロ雀士の<a href="https://ja.wikipedia.org/wiki/%E9%AD%9A%E8%B0%B7%E4%BE%91%E6%9C%AA">魚谷侑未プロ</a>は著書である<a href="https://www.amazon.co.jp/dp/B01GCS7600/ref=dp-kindle-redirect?_encoding=UTF8&amp;btkr=1">ゆーみんの現代麻雀が最速で強くなる本</a>で、麻雀の実力について議論するには1000半荘ぐらい必要だと述べています。麻雀はそれぐらい運の要素の強いゲームであるということですね。</p>
+<p>ところが、1000半荘やる、というのは並大抵のことではありません。飛び終了なし(誰かの持ち点が0点を下回ったとして半荘を続行するルール)の場合は、おおよそ、1半荘に1時間程度かかると思います。</p>
+<p>計算を簡単にするために1半荘1時間で計算していたとしても、1000時間かかります。1日8半荘、8時間やったとしても125日。週に1回集まったとしても125週間、おおよそ2年半かかる計算になります。</p>
+<p>もちろん、半荘が長引くこともあるでしょうし、そもそも毎週やる、という計算に無理があります。というわけで、おそらく4年ぐらいかかるんじゃないでしょうか。だれが麻雀強いのかを決めるのに4年、膨大な日数ですね。</p>
+<p><br /></p>
+<p>そこでベイズ推定が役に立ちます。</p>
+<p>各半荘の結果や、各対局日の勝ち負けは背後にある雀力という潜在的なパラメータに規定されていると考えます。 ところが、麻雀には運の要素も大きいので、雀力の相対的な差だけではなく、運という不確実性も絡んでデータは生成されています。</p>
+<p>ここで、麻雀の成績であるポイントを生成するのに最適な確率分布を紹介したいと思います。</p>
+<p><br /></p>
+<div style="text-align: center;">
+<p><strong>ディリクレ分布です。</strong></p>
+</div>
+<p><br /></p>
+<p>そのことを理解するために、簡単に麻雀の成績について解説したいと思います。 各半荘において最終的に得られる成績は、ポイントになります。 各プレイヤーは25000点を持って半荘をスタートし、その後のなんやかんやのやりとりをして点数を増やしたり減らしたりします。 そして、最終的にはポイントという形で、理論上はマイナス無限大からプラス無限大までのいずれかの値になります。 無限とかいうと大げさですが、おおよそ-50から+50くらいになります。</p>
+<p>ポイントの重要な特徴としては、4人のポイントを足し合わせると、必ず0になるということです。</p>
+<p>データ生成分布を考える際に重要なのは、各半荘のデータは毎回足すと同じ値になるように相対的なものとして表現される、ということです。</p>
+<p>指数変換を施すことで、相対性を維持したまま足したら1になるように変換することはできますので、麻雀データはディリクレ分布で生成するのに最適なデータと言えます。</p>
+<p>なお、ディリクレ分布については<a href="http://y-mattu.hatenablog.com/entry/2016/03/03/143451">こちら</a>や<a href="https://www.slideshare.net/stjunya/ss-29629644">こちら</a>を参考にしてください。</p>
+<p>各プレイヤーの雀力をabilityというパラメータで表した場合、各半荘のデータは次のように表現できます。</p>
+<div style="text-align: center;">
+<p><span class="math inline">\(pointPerHantyan\)</span><sub>t</sub> 〜 <span class="math inline">\(dirichlet(\vec{ability})\)</span></p>
+</div>
+<p>なお、<span class="math inline">\(pointPerHantyan\)</span>は<span class="math inline">\(t\)</span>番目の半荘のポイントです。</p>
+<p>同じように、各対局日の結果も、各プレイヤーの雀力に基づいて生成されると考えます。</p>
+<div style="text-align: center;">
+<p><span class="math inline">\(PointPerDay\)</span><sub>d</sub> 〜 <span class="math inline">\(dirichlet(\vec{Ability})\)</span></p>
+</div>
+<p>ディリクレ分布からデータが生成されているので、各プレイヤーの雀力における相対的な差から、データが発生する過程には不確実性が考慮されています。これは麻雀における運の要素といえるでしょう。</p>
+<p>シンプルなモデルであればこれで完成です。 ただ、先ほどのグラフで、麻雀の成績には時系列的な変化がありそうな気配があります。おそらく、たゆまぬ努力によって強くなったプレイヤーもいるのでしょう。</p>
+<p>ということで、雀力は時系列的に変化していると考えます。 その際、ある日に発揮される雀力は直近の対局日に発揮される雀力に近いだろう、という状態空間モデル的な仮定を置きます。 数式にすると次のような形になります。</p>
+<div style="text-align: center;">
+<p><span class="math inline">\(ability\)</span><sub>sd</sub> 〜 <span class="math inline">\(normal(2 * ability\)</span><sub>sd-2</sub> - <span class="math inline">\(ability\)</span><sub>sd-1</sub><span class="math inline">\(, 1)\)</span></p>
+</div>
+<p><span class="math inline">\(ability\)</span><sub>sd</sub>はs番目のプレイヤーにおいてd番目の対局日に発揮される雀力です。</p>
+</div>
+<div id="モデルコード" class="section level2">
+<h2>モデルコード</h2>
+<p>これまで述べてきたモデルをstanコードにすると、次のようになります。</p>
+<pre class="stan"><code>data {
+  int player; // プレイヤー数
+  int hantyanNum; // 半荘数
+  int day; // 対局日数
+  int hantyanDay[hantyanNum]; // 各半荘と対局日数を紐づけるやつ
+  simplex [player] point [hantyanNum]; // 各半荘のポイント
+  simplex [player] pointPerDay [day]; // 各対局日のポイント
+}
+
+parameters {
+  vector &lt;lower = 0&gt; [player] ability [day]; // 雀力
+  }
+model {
+  ability[1] ~ cauchy(0, 25); // 雀力1日目
+  ability[2] ~ cauchy(0, 25); // 雀力2日目
+  
+  for(d in 4:day){
+    ability[d] ~ normal(2*ability[d-1]-ability[d-2],1); // 雀力の遷移
+    }
+    
+  for(t in 1:hantyanNum){
+    point[t,] ~ dirichlet(ability[hantyanDay[t]]); // 各半荘におけるポイントのデータ生成
+    }
+    
+  for(d in 1:day){
+    pointPerDay[d,] ~ dirichlet(ability[d]); // 各対局日におけるポイントのデータ生成
+    }
+}</code></pre>
+</div>
+<div id="雀力の事後分布時系列ver" class="section level2">
+<h2>雀力の事後分布(時系列Ver)</h2>
+<p>上記のstanコードで推定すると、各対局日ごとに雀力の事後分布が得られます。 それぞれについて事後平均を算出し、各プレイヤーの雀力の推移を見てみます。</p>
+<p><img src="majongAC_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>うーん・・・ なんかイマイチな感じですね。</p>
+<p>状態の遷移を仮定していない1日目、2日目からの急降下といい、うまく推定できていない感もあります。 ただ、これは事前分布やらなんやらを変えても概ね同じです。</p>
+<p>おそらくもっとも大きな問題は、各対局日で雀力が異なるという仮定を置いていることです。 当然、その日の勝者の雀力が最も高く推定されると思います。 このことは、上の方で出した各対局日の着順のプロットと概ね同じ形をしていることからも言えるかもしれません。 各対局日における半荘数は5-8半荘なので、データ数がが非常に少ないというのもあるかもしれません。</p>
+</div>
+<div id="シンプルだが現実に即したモデル" class="section level2">
+<h2>シンプルだが現実に即したモデル</h2>
+<p>というわけで、もっともシンプルなモデルを考えてみます。 全135半荘の背後にはプレイヤーごとに単一の雀力というパラメータが控えており、各半荘の結果や各対局日の結果は運によってバラついているとするモデルです。</p>
+<p>数式は、先ほどのモデルの時系列的変化の部分をとっぱらったものになるので割愛します。</p>
+<p>麻雀の強さを考える上で135半荘は十分とは言えないまでもそこそこの数になりますので、このモデルはとても現実をよく反映しています。</p>
+<p>当初は、時系列的変化の部分を工夫しようとか、運の良さもパラメータにしようとかいろいろ考えていました。しかし、たったの数半荘で麻雀の強さを考えようというのに無理があるのかもしれません。 また、運をパラメータにしてしまうと、ディリクレ分布から生成される際の不確実性をなんと解釈したらよいかわからなくなります。</p>
+<p>案外、シンプルなモデルの方が現実をよく反映するのかもしれませんね。</p>
+</div>
+<div id="モデルコード-1" class="section level2">
+<h2>モデルコード</h2>
+<p>先ほどのモデルが少しシンプルになっただけですが、改めてモデルコードを貼って置きます。</p>
+<pre class="stan"><code>data {
+  int player;
+  int hantyanNum;
+  int day;
+  int hantyanDay[hantyanNum]  ;
+  simplex [player] point [hantyanNum];
+  simplex [player] pointPerDay [day];
+}
+
+parameters {
+  vector &lt;lower = 0&gt; [player] ability;
+  }
+model {
+  ability ~ normal(0, 1000);
+    
+  for(t in 1:hantyanNum){
+    point[t,] ~ dirichlet(ability);
+    }
+    
+  for(d in 1:day){
+    pointPerDay[d,] ~ dirichlet(ability);
+    }
+}</code></pre>
+</div>
+<div id="雀力の事後分布単一パラメータver" class="section level2">
+<h2>雀力の事後分布(単一パラメータVer)</h2>
+<p>今回のモデルでは各プレイヤーの雀力が推定されています。各々の雀力を比較するために、事後分布を重ねてプロットしてみます。</p>
+<p><img src="majongAC_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><br /> なんだか良さげですね。Player K氏とPlayer U氏の間には明確な実力差がありそうです。 重ねたプロットだけではわかりづらい部分もあると思うので、一応サマリーを出して置きます。 ability[1]~ability[4]は、それぞれI氏、K氏、U氏、S氏に対応します。</p>
+<p><br /></p>
+<pre><code>## Inference for Stan model: majongBayes.
+## 4 chains, each with iter=2000; warmup=1000; thin=1; 
+## post-warmup draws per chain=1000, total post-warmup draws=4000.
+## 
+##              mean se_mean   sd   2.5%    25%    50%    75%  97.5% n_eff
+## ability[1]   3.02    0.01 0.21   2.62   2.88   3.02   3.17   3.44  1599
+## ability[2]   3.41    0.01 0.24   2.97   3.24   3.40   3.57   3.89  1631
+## ability[3]   2.42    0.00 0.17   2.09   2.30   2.42   2.53   2.77  1736
+## ability[4]   2.97    0.01 0.21   2.56   2.82   2.96   3.11   3.38  1678
+## lp__       403.25    0.03 1.40 399.67 402.58 403.57 404.25 404.99  1981
+##            Rhat
+## ability[1]    1
+## ability[2]    1
+## ability[3]    1
+## ability[4]    1
+## lp__          1
+## 
+## Samples were drawn using NUTS(diag_e) at Tue Dec 12 02:53:59 2017.
+## For each parameter, n_eff is a crude measure of effective sample size,
+## and Rhat is the potential scale reduction factor on split chains (at 
+## convergence, Rhat=1).</code></pre>
+<p><br /></p>
+<p>これらの結果を見た感じ、<strong>最強の雀士はPlayer K氏</strong>と言えそうです。 そして、Player S氏はPlayer I氏に勝利数でこそ上回っていますが、そのほかの成績の安定性から、Player I氏の方が若干強めに推定されています。</p>
+<p>ここについては、現実の麻雀をとてもよく反映していて、いかに4着を回避するか、1位を取れない時にいかに2位に留まるか、ということの重要性を表しています。</p>
+<p>ただ、この辺りの3名は事後分布もだいぶ重なっているので、今後の勝負に期待ですね。Player K氏は暫定首位の座を守りきれるのでしょうか！？</p>
+<p>Player U氏も95%信用区間ではPlayer I氏、Player S氏に被っているので、今後の成長に期待できます。</p>
+</div>
+<div id="今回のデータにどれほど適合するか" class="section level2">
+<h2>今回のデータにどれほど適合するか？</h2>
+<p>ところで今回の推定値、なんだかとても小さな値になっていますね。 これも事前分布をいろいろ変えてもあまり変わりがありません。 それに、プレイヤー間の雀力の差もとても小さいです。</p>
+<p>果たしてこんなもんなのか、というのは当然の疑問かと思います。 私はディリクレ分布にあまり詳しくないので、この辺りはなんとも言えません。 ひとまず、今回得られた推定値から今回と同様に135半荘のデータを生成して、どのぐらい似ているかを見てみたいと思います。</p>
+<p>手順としては、次のようにやってみます。</p>
+<ol style="list-style-type: decimal">
+<li>得られた事後分布から各プレイヤーの雀力(雀力ベクトル)を135半荘分もってくる</li>
+<li>雀力ベクトルをパラメータとしたディリクレ分布から135半荘分のデータを生成する</li>
+<li>各半荘のデータについて値の大小関係から着順に変換する</li>
+<li>勝率、連対率を計算する</li>
+<li>1~4を1000回繰り返す</li>
+</ol>
+<p>という流れでいきたいと思います。 1~4で生成されるデータはもし同じような135半荘分のデータがあったら、という事後分布からの予測になるとおもいます。 今回はその予測を1000回行い、予測区間を算出します。 実際のデータが予測区間に入っているかどうかを元にモデルの良さを評価したいと思います。</p>
+<p><br /> <img src="majongAC_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><br /></p>
+<p>まあまあいい感じなのではないでしょうか。 このモデルでは、概ねいい感じに各プレイヤーの雀力を運によるばらつきを考慮しつつ推定することができていると思います。</p>
+<p>Player S氏とPlayer U氏についてはだいぶギリギリですが・・・ Player S氏は実際より弱く、Player U氏は実際より強く推定されているのかもしれません。このあたりはさらなるモデルの改良が望まれるところです。</p>
+<p>麻雀のモデルについては定期的に試行錯誤をしているのですが、結果的にだいぶシンプルなモデルに落ち着きました。 もし、こんなモデルもいいんじゃないか、というものがあれば、是非教えてください。</p>
+<p><br /></p>
+<p>それでは、<strong>Enjoy Ma-jong !!</strong></p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+h1 {
+  color: #f6c;
+}
+h2 {
+  color: #FF69B4;
+  border-bottom: 1px solid #000;
+  margin-top: 35px;
+  padding-top: 20px;
+}
+h3 {
+  color: #87cefa;
+  margin-top: 20px;
+  padding-top: 15px;
+}
+
+footer {
+  margin-top: 20px;
+  border-top: 1px solid #000;
+}
+
+dt {
+  clear: left;
+  float: left;
+  width: 15%;
+  font-weight: bold;
+  text-align: right;
+  padding: 3px 15px 3px 0;
+}
+dd {
+  margin: 0 0 0 20%;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+img {
+  border: 1px solid #006;
+}
+
+TOC a {
+color: black;
+font: sans-serif
+}
+
+.tocify .tocify-header {
+  color: black;
+  Font-Family: sans-serif;
+  font-size: 0.8em;
+}
+
+.tocify .tocify-header .active {
+  color: black;
+  Font-Family: sans-serif;
+  background: #c0c0c0;
+  font-size: 0.8em;
+}
+
+body {
+  Font-Family: Helvetica;
+  color: gray;
+  font-size: 1.8em;
+}
+
+a {
+  color:#FF69B4;
+}
+
+img{
+float: none;
+margin: 2px;
+border: 1px solid gray ;
+}
