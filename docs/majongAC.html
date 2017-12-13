@@ -308,11 +308,11 @@ div.tocify {
 
 <div id="麻雀とは" class="section level2">
 <h2>麻雀とは</h2>
-<p>みなさんは麻雀という競技をやったことがありますでしょうか。 麻雀というのは4人で卓を囲み、手元にある13枚の牌を元に、牌を引いてきたりいろいろして、なんかの役を上がったりなんだったりして、点数のやりとりをする競技です。</p>
+<p>みなさんは麻雀という競技をやったことがありますでしょうか。 麻雀というのは4人で卓を囲み、牌を引いてきたりいろいろして、なんかの役を上がったりなんだったりして、点数のやりとりをする競技です。</p>
 <p>詳しいことは「麻雀　ルール」とかで検索してください。</p>
 <p>今回の記事では、麻雀のデータを使ってモデリングしてみたいと思います。</p>
 <p>では、「麻雀のデータ」ってなんでしょう？</p>
-<p>私は麻雀が大好きなので、よく仲間内で麻雀を打ちます。 その際、半荘(麻雀における1ゲームの単位)ごとに結果を記録しています。 麻雀をする際にはおおよそ6半荘なり、8半荘して、その日の各半荘の得点を合計し、勝者を決めていると思います。 雀荘には記録用紙があるので、下の図のような感じになります。 下図の場合ですと左から2番目のプレイヤーが勝っています。</p>
+<p>私は麻雀が大好きなので、よく仲間内で麻雀を打ちます。 その際、半荘(麻雀における1ゲームの単位)ごとに結果を記録しています。 麻雀をする際にはおおよそ4半荘なり、8半荘して、その日の各半荘の得点を合計し、勝者を決めていると思います。 雀荘には記録用紙があるので、下の図のような感じになります。 例えば、下図の場合ですと左から2番目のプレイヤーが勝っています。</p>
 <br />
 <div style="text-align: center;">
 <div class="figure">
@@ -420,7 +420,7 @@ div.tocify {
 </div>
 <p><br /></p>
 <p>また、各対局日の着順を時系列上にプロットすると、なかなか面白い特徴があります。</p>
-<p><img src="majongAC_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="majongAC_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p><br /></p>
 <p>初めの頃はPlayer K氏の連勝が目立ちますね。ところが、後半になってくるとPlayer S氏もそれなりに勝つようになってきますし、なによりPlayer I氏の成績が全体的に良くなってきている気がします。</p>
 <p>もちろん、みなさん麻雀の上達に向けていろいろ努力をしていると思いますので、技術の向上によっていろいろな変化があるんだと思います。 もしかすると、麻雀データは時系列データとして見るのが良いのかもしれませんね。</p>
@@ -498,7 +498,7 @@ model {
 <div id="雀力の事後分布時系列ver" class="section level2">
 <h2>雀力の事後分布(時系列Ver)</h2>
 <p>上記のstanコードで推定すると、各対局日ごとに雀力の事後分布が得られます。 それぞれについて事後平均を算出し、各プレイヤーの雀力の推移を見てみます。</p>
-<p><img src="majongAC_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="majongAC_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>うーん・・・ なんかイマイチな感じですね。</p>
 <p>状態の遷移を仮定していない1日目、2日目からの急降下といい、うまく推定できていない感もあります。 ただ、これは事前分布やらなんやらを変えても概ね同じです。</p>
 <p>おそらくもっとも大きな問題は、各対局日で雀力が異なるという仮定を置いていることです。 当然、その日の勝者の雀力が最も高く推定されると思います。 このことは、上の方で出した各対局日の着順のプロットと概ね同じ形をしていることからも言えるかもしれません。 各対局日における半荘数は5-8半荘なので、データ数がが非常に少ないというのもあるかもしれません。</p>
@@ -541,19 +541,19 @@ model {
 <div id="雀力の事後分布単一パラメータver" class="section level2">
 <h2>雀力の事後分布(単一パラメータVer)</h2>
 <p>今回のモデルでは各プレイヤーの雀力が推定されています。各々の雀力を比較するために、事後分布を重ねてプロットしてみます。</p>
-<p><img src="majongAC_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="majongAC_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p><br /> なんだか良さげですね。Player K氏とPlayer U氏の間には明確な実力差がありそうです。 重ねたプロットだけではわかりづらい部分もあると思うので、一応サマリーを出して置きます。 ability[1]~ability[4]は、それぞれI氏、K氏、U氏、S氏に対応します。</p>
 <p><br /></p>
-<pre><code>## Inference for Stan model: majongBayes.
+<pre><code>## Inference for Stan model: majongBayesDirichlet.
 ## 4 chains, each with iter=2000; warmup=1000; thin=1; 
 ## post-warmup draws per chain=1000, total post-warmup draws=4000.
 ## 
 ##              mean se_mean   sd   2.5%    25%    50%    75%  97.5% n_eff
-## ability[1]   3.02    0.01 0.21   2.62   2.88   3.02   3.17   3.44  1599
-## ability[2]   3.41    0.01 0.24   2.97   3.24   3.40   3.57   3.89  1631
-## ability[3]   2.42    0.00 0.17   2.09   2.30   2.42   2.53   2.77  1736
-## ability[4]   2.97    0.01 0.21   2.56   2.82   2.96   3.11   3.38  1678
-## lp__       403.25    0.03 1.40 399.67 402.58 403.57 404.25 404.99  1981
+## ability[1]   3.04    0.01 0.22   2.62   2.89   3.03   3.18   3.46  1422
+## ability[2]   3.43    0.01 0.24   2.97   3.26   3.42   3.58   3.91  1452
+## ability[3]   2.43    0.00 0.17   2.10   2.31   2.43   2.55   2.77  1604
+## ability[4]   2.98    0.01 0.21   2.57   2.83   2.98   3.12   3.40  1613
+## lp__       403.23    0.03 1.41 399.74 402.49 403.56 404.26 404.96  1965
 ##            Rhat
 ## ability[1]    1
 ## ability[2]    1
@@ -561,7 +561,7 @@ model {
 ## ability[4]    1
 ## lp__          1
 ## 
-## Samples were drawn using NUTS(diag_e) at Tue Dec 12 02:53:59 2017.
+## Samples were drawn using NUTS(diag_e) at Wed Dec 13 10:41:11 2017.
 ## For each parameter, n_eff is a crude measure of effective sample size,
 ## and Rhat is the potential scale reduction factor on split chains (at 
 ## convergence, Rhat=1).</code></pre>
@@ -584,7 +584,8 @@ model {
 <li>1~4を1000回繰り返す</li>
 </ol>
 <p>という流れでいきたいと思います。 1~4で生成されるデータはもし同じような135半荘分のデータがあったら、という事後分布からの予測になるとおもいます。 今回はその予測を1000回行い、予測区間を算出します。 実際のデータが予測区間に入っているかどうかを元にモデルの良さを評価したいと思います。</p>
-<p><br /> <img src="majongAC_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><br /></p>
+<p><img src="majongAC_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p><br /></p>
 <p>まあまあいい感じなのではないでしょうか。 このモデルでは、概ねいい感じに各プレイヤーの雀力を運によるばらつきを考慮しつつ推定することができていると思います。</p>
 <p>Player S氏とPlayer U氏についてはだいぶギリギリですが・・・ Player S氏は実際より弱く、Player U氏は実際より強く推定されているのかもしれません。このあたりはさらなるモデルの改良が望まれるところです。</p>

@@ -44,17 +44,20 @@ font: sans-serif
 .tocify .tocify-header {
   color: black;
   Font-Family: sans-serif;
+  font-size: 0.9em;
 }
 
 .tocify .tocify-header .active {
   color: black;
   Font-Family: sans-serif;
   background: #c0c0c0;
+  font-size: 0.9em;
 }
 
 body {
   Font-Family: Helvetica;
   color: gray;
+  font-size: 1.8em;
 }
 
 a {
