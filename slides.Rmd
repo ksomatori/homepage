@@ -4,7 +4,7 @@
 ## dplyr & purrr を用いたデータハンドリング
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(zousan)
-embed_slide("https://www.slideshare.net/SomatoriKeita/dplyr-purrr-77749974")
+embed_slide("https://www.slideshare.net/SomatoriKeita/dplyr-purrr-103718147")
 ```
 
 Rのパッケージ群**tidyverse**内に入っている**dplyr**と**purrr**を用いたデータハンドリングに関する資料です。データハンドリングには様々なやり方がありますが、なるべくミスなく効率よく行うための工夫について解説しています。また、元々のデータが整然データではない時に、**tidyverse**パッケージは大活躍します。
@@ -15,6 +15,14 @@ Rのパッケージ群**tidyverse**内に入っている**dplyr**と**purrr**を
 
 [Stan Advent Calender 2017](https://qiita.com/advent-calendar/2017/stan)で投稿した記事です。
 麻雀データをモデリングし、麻雀の強さ(雀力)と運を分離しています。
+
+## 妄想の認知モデル
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(zousan)
+embed_slide("https://www.slideshare.net/SomatoriKeita/ss-103719868")
+```
+
+2018年6月30日に行われた、ベイズ統計WS「心理学者のためのベイズ 統計学」において、「臨床心理学における事例: 妄想 の認知モデル」の回で発表した資料です。
 
 
 <br />
