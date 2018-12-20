@@ -1,7 +1,6 @@
 ---
 title: "ディリクレ麻雀モデル"
 navbar: 
-  title: "杣取恵太"
   left:
     - text: "Home"
       href: index.html

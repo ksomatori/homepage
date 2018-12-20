@@ -1,6 +1,5 @@
 name: "杣取恵太のホームページ"
 navbar: 
-  title: "杣取恵太"
   left:
     - text: "Home"
       href: index.html

@@ -5,11 +5,13 @@ h2 {
   color: #FF69B4;
   border-bottom: 1px solid #000;
   margin-top: 35px;
+  margin-bottom: 20px;
   padding-top: 20px;
 }
 h3 {
   color: #FF69B4;
   margin-top: 20px;
+  margin-bottom: 10px;
   padding-top: 15px;
 }
 
@@ -57,10 +59,18 @@ body {
 }
 
 a {
-  color:#FF69B4;
+  color: #00bfff;
+}
+
+p {
+  font-size: 100%;
+  color: #333;
+  line-height: 1.7;
+  margin-bottom: 1.5em;
 }
 
 img{
-margin: 10px;
+margin-top: 10px;
+margin-bottom: 15px;
 border: 1px solid gray ;
 }

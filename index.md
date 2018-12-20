@@ -12,6 +12,8 @@
 
 ## 更新情報
 
+- 2018/12/21(Slides): stan advent calender 2018の記事を書きました。
+
 <br />
 <br />
 <br />

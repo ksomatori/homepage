@@ -11,10 +11,10 @@ Rのパッケージ群**tidyverse**内に入っている**dplyr**と**purrr**を
 
 ## ディリクレ麻雀モデル
 
-[記事はこちら](majongAC.html)
-
 [Stan Advent Calender 2017](https://qiita.com/advent-calendar/2017/stan)で投稿した記事です。
 麻雀データをモデリングし、麻雀の強さ(雀力)と運を分離しています。
+
+[記事はこちら](majongAC.html)
 
 ## 妄想の認知モデル
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -24,6 +24,12 @@ embed_slide("https://www.slideshare.net/SomatoriKeita/ss-103719868")
 
 2018年6月30日に行われた、ベイズ統計WS「心理学者のためのベイズ 統計学」において、「臨床心理学における事例: 妄想 の認知モデル」の回で発表した資料です。
 
+## ハードルポアソンモデルによる和了巡目の推定
+
+[Stan Advent Calender 2018](https://qiita.com/advent-calendar/2018/stan)で投稿した記事です。
+ハードルポアソンモデルによって麻雀の和了巡目と中張牌の出の早さの関係を調べました。
+
+[記事はこちら](advent2018.html)
 
 <br />
 <p>Copyright &copy; 2017 Keita Somatori. All rights reserved </p>
