@@ -8,7 +8,7 @@ h2 {
   padding-top: 20px;
 }
 h3 {
-  color: #87cefa;
+  color: #FF69B4;
   margin-top: 20px;
   padding-top: 15px;
 }
@@ -30,10 +30,6 @@ dd {
   margin: 0 0 0 20%;
   padding-top: 3px;
   padding-bottom: 3px;
-}
-
-img {
-  border: 1px solid #006;
 }
 
 TOC a {
@@ -65,7 +61,6 @@ a {
 }
 
 img{
-float: left;
 margin: 10px;
 border: 1px solid gray ;
 }

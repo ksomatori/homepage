@@ -22,7 +22,7 @@ output:
     toc_float:
       collapse: false
     df_print: "kable"
-    css: site_style_majong.css
+    css: site_style.css
 ---
 
 ```{r message=FALSE, warning=FALSE, include=FALSE, paged.print=FALSE}
