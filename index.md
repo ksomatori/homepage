@@ -12,6 +12,8 @@
 
 ## 更新情報
 
+- 2019/6/11(me, Publications): 業績欄と職歴欄を更新しました。
+
 - 2018/12/21(Slides): stan advent calender 2018の記事を書きました。
 
 <br />
