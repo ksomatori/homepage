@@ -13,4 +13,4 @@ RnwWeave: Sweave
 LaTeX: pdfLaTeX
 
 BuildType: Website
-WebsitePath: ~/Dropbox/private/ドキュメント/ホームページ/homepage
+WebsitePath: ~/Google ドライブ/ドキュメント/ホームページ/homepage
