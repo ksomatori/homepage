@@ -62,6 +62,8 @@ a {
   color: #00bfff;
 }
 
+a:link { color: gray; }
+
 p {
   font-size: 100%;
   color: #333;
