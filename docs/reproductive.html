@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>心理学研究の再現性を検証する</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="site_style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 61px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h2 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h3 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h4 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h5 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h6 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="me.html">About Me</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li>
+  <a href="publications.html">Publications</a>
+</li>
+<li>
+  <a href="slides.html">Slides</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">心理学研究の再現性を検証する</h1>
+
+</div>
+
+
+<p>こんにちは、杣取(そまとり)です。</p>
+<p>本記事は再現性アドカレの18日目の記事になります。</p>
+<p>先日、心理学評論の特集号<a href="http://team1mile.com/sjpr62-3/">「心理学研究の新しいかたち」</a>にて拙論文<a href="https://psyarxiv.com/4zbc5">アンへドニア(anhedonia)と遅延割引: Lempert &amp; Pizzagalli(2010)の追試</a>が採択されました。 今回は、この論文の宣伝と、執筆の裏話などを書こうと思います。</p>
+<p>ゆる〜い感じで書こうと思うのであまり細かいことは気にしないでもらえると助かります。</p>
+<div id="論文の概要" class="section level1">
+<h1>論文の概要</h1>
+<p>まず、この論文の概要をざっくり紹介していきます。 この論文では、Lempert &amp; Pizzagalli (2010)の<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2862767/">“Delay Discounting and Future-directed Thinking in Anhedonic Individuals”</a>という論文の追試を行っています。</p>
+<p>Lempert &amp; Pizzagalli (2010)では、心理尺度で測定したアンへドニアと、遅延割引課題を用いて測定した割引率との間に負の相関(r = 0.42)があることが示されています。 ちなみに、アンへドニアというのは楽しい気持ちや嬉しい気持ちになりにくくなってしまう症状のことを言います。割引率は遅延する報酬の価値をどれだけ割り引くか、という指標です。ヒトは一般に、遅延する報酬の価値を割り引く(つまり、今の1000円よりも明日の1000円は安く感じる)ことが示されています。つまり、割引率が高いということは、遅延する報酬の価値をより大きく割り引く、ということを意味します。</p>
+<p>Lempert &amp; Pizzagalli(2010)では、金銭に対する遅延割引課題を実施しているので、アンへドニア症状が高い人ほど、遅延してもらえるお金の価値を割り引かない(つまり、遅延しても金銭に対する価値は変わらない)ということを示したことになります。</p>
+<p>私たちの研究では、ウェブ実験を使って同様の実験を行いました。その結果、アンへドニアと割引率の間の相関係数はr = 0.12であり、統計的に有意ではありませんでした。つまり、Lempert &amp; Pizzagalli(2010)の研究成果は今回の手続きでは再現されなかったことになります。</p>
+<p>なお、本実験で使った実験プログラムと統計解析コードは<a href="https://github.com/ykunisato/somatori_kunisato_2019_replication_study">ここ</a>においてあります。</p>
+</div>
+<div id="裏話" class="section level1">
+<h1>裏話</h1>
+<p>さて、ここからはこの再現性論文を書くにあたって、こんなことがあったよ〜的なことをつらつら書いていきたいと思います。</p>
+<div id="論文に掲載されている手続きがなんか変" class="section level2">
+<h2>論文に掲載されている手続きがなんか変</h2>
+<p>Lempert &amp; Pizzagalli (2010)には、以下のような記述がありました。</p>
+<blockquote>
+<p>The delay discounting task used here is a computerized question-based measure that can be used to study choice behavior (Richards et al., 1999).</p>
+</blockquote>
+<p>どうやら、遅延割引課題はRichard et al. (1999)を元にして作ったようです。Lempert &amp; Pizzagalli (2010)の中には、</p>
+<blockquote>
+<p>Participants were presented with a series of questions asking about their preferences between $10 to be received after one of the delays (1, 2, 30, 180 and 365 days) or a smaller amount (e.g., $2) to be received immediately. …</p>
+</blockquote>
+<p>と実際に使った課題の説明もあるのですが、これがどうやらRichards et al. (1999)とは微妙に異なっています。</p>
+<p>具体的には、</p>
+<ul>
+<li>確率割引課題の有無</li>
+<li>遅延時間</li>
+<li>即時報酬額の変化方法</li>
+<li>主観的等価値の決定方法</li>
+<li>そのほか細かいこと</li>
+</ul>
+<p>これは、Richards et al.(1999)を参考に、マイナーチェンジを行ったということでしょうか。 ところがどうやら、Lempertにメールで確認してみると、Richards et al. (1999)と全く同じ課題をやったとのこと・・・</p>
+<p>？？？？？って感じなのですが、とりあえずそういうことらしいです。</p>
+<p>今回のケースではもちろんデータ取得前でしたので、遅延割引課題はRichards et al. (1999)に合わせることにしました。また、事前登録を行った論文を修正し、Appendixをつけて経緯を対処することで対処しました。</p>
+</div>
+<div id="r2にはいろんな定義がある" class="section level2">
+<h2>R2にはいろんな定義がある。</h2>
+<p>今回の再現性企画では、第一段階・第二段階と2回査読をして頂きます。 第一段階の時に査読者の先生より、「R2値を載せよ」とのご指摘がありました。あまり深く考えずに、統計解析にR2を使うことを追記したのですが、後々問題が発生しました。</p>
+<p><u>どうやら、R2値の定義っていくつかあるんですね。あと、遅延割引関数のような非線形関数で使うのは微妙らしいです。</u></p>
+<p>知らなかった私に一番の問題があるんですが、いざ解析しようとしたときに、「どの定義を採用したものか、というかそもそも使っていいのか？でも事前登録論文に書いちゃったしなぁ」という問題が生じました。</p>
+<p>今回はデータに適した定義を使うことにして論文に掲載しました。問題なのは、結果的に、データ取得後に解析方法を選択する裁量が私に生じてしまったことです。もし事前登録をしてなければ、全部の定義を試して一番うまくいったやつを報告するとか、そもそもRが低かったら報告しないとか、そういうことがありえてしまいますね。</p>
+</div>
+<div id="収束しない結果" class="section level2">
+<h2>収束しない結果</h2>
+<p>これは、再現性とはあんま関係なさそうな話ですが、実は一番苦戦したところなのでついでに書きます。Lempert &amp; Pizzagalli (2010)では各参加者の割引率を最尤推定法で推定しています。当然私も最尤推定をするわけですが、これがなかなか収束しない。推定のたんびに結果が変わって何が何やら。</p>
+<p>私はRを使って解析をしているのですが、最尤推定のできる関数としてはoptim関数が有名だと思います。一方で<a href="https://www.amazon.co.jp/dp/B07HYSQYN2/ref=dp-kindle-redirect?_encoding=UTF8&amp;btkr=1">こちらの本</a>によるとsolnpというパッケージの方が安定して推定できるとのこと。ところが、これがなかなか時間がかかる・・・</p>
+<p>データとしては150名くらいなのでそんなに多くはないはずなのですが、ランダムサーチをそれなりの数でやると1週間とかかかってました。 これはあかん、ということで、optim関数にしたり、でも収束しなかったり…てな感じで、結構試行錯誤がありました。最終的には問題なく収束した結果が無事得られたので、問題はなかったのですが、こういう思うようにうまくいかない時の試行錯誤で、それなりに危険な気がします。うまくいくようにやってるうちに、当初想定していた解析とは違うやり方になっていたり、とか。</p>
+</div>
+<div id="思ったこと" class="section level2">
+<h2>思ったこと</h2>
+<p>論文にも書きましたが、今回わりと骨身にしみたのが、「データ取得前に解析の準備を完全に終えておき、公開しておくことの重要性」です。</p>
+<p>これをしておくと、いざやってみたらうまくいかないとか、違う方法があるとか、そういうデータ取得後に生じる研究者側の自由度をある程度制限することができると思います。</p>
+<p>理想的には、予備実験的にデモデータを取得しておき、予定している解析を行う解析コードを作り、ドキュメント化した上でどこかにアップロードする、というのが素敵だと思います。こうすることで、データ取得中・データ取得後に生じうる様々なアクシンデントを回避することもできるんじゃないでしょうか。</p>
+</div>
+</div>
+<div id="心理学研究はなぜ再現しないのか" class="section level1">
+<h1>心理学研究はなぜ再現しないのか</h1>
+<p>最後に、再現性に限った話じゃないのですが、最近心理学研究について素朴に思ってることを書いて終わります。あくまで超個人的感想で、特に根拠もないんですが、せっかくなので書いとこうと思います。</p>
+<hr />
+<p>最近、「手元にデータから母集団についての推測ってできるのかな？」なんてことを考えています。</p>
+<p>順を追って話すと長いのと、今とても眠いので、雑に書きますが・・・</p>
+<p>心理学の研究は一般に参加者の同意を得て行われるので、</p>
+<p>研究参加お願いします → 良いですよ</p>
+<p>のやりとりが必ず行われていると思います。私たちが扱う標本というのは、「良いですよ」と答える方たちですよね。</p>
+<p>実はこれって、かなり偏った(限られた)集団な気がしています。誤解を恐れずに言えば、ごく限られた特殊な集団だけを対象に研究をして、母集団(日本人とか、人間とか)についてなにか推論をするっていうのは結構無理めなんじゃないかなと。これは、心理学で想定している効果量が小さいとか、そういう問題ではないような気がします。</p>
+<p>よく推測統計の例で、よくかき混ぜられた味噌汁の味見をするのに全部飲む必要はない、みたいな話がありますが、いっちゃえば全然混ざってない味噌汁なわけですよね。だから、味見をするにはほとんど飲む必要があるんじゃないでしょうか。</p>
+<p>そんなわけで最近私は、あくまで標本についてものをいうっていうことで良いんじゃないかなと思っています。この標本だったらこうだけど、この標本ではこうだったよっていう結論が集積して、いつか母集団についての結論が導ければ良いのかな、みたいな。</p>
+<p>再現性にからめていうなら、再現しなくても不思議はないのかもしれません。</p>
+<p>いずれにしても、心理学研究の再現性の問題は、私tにとってはいろんなことを考える良いきっかけになりました。特に、なんとなく大前提としていたようなことが必ずしもそうではないのかな、と考える良い機会でした。</p>
+<p>もう無理矢理終わらせます。</p>
+<p>Enjoy !!</p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
