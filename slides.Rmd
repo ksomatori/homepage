@@ -31,5 +31,12 @@ embed_slide("https://www.slideshare.net/SomatoriKeita/ss-103719868")
 
 [記事はこちら](advent2018.html)
 
+## 心理学研究の再現性
+
+[Open and Reproducible Science Advent Calendar 2019](https://adventar.org/calendars/4523)で投稿した記事です。
+今年、心理学評論の特集号[「心理学研究の新しいかたち」](http://team1mile.com/sjpr62-3/)で心理学研究の再現性を検証する論文を書きました。この記事ではその論文のざっくりとした内容と裏話をしています。
+
+[記事はこちら](reproductive.html)
+
 <br />
 <p>Copyright &copy; 2017 Keita Somatori. All rights reserved </p>
