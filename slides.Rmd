@@ -38,5 +38,12 @@ embed_slide("https://www.slideshare.net/SomatoriKeita/ss-103719868")
 
 [記事はこちら](reproductive.html)
 
+## 有馬記念を血統だけで予想する
+
+[Stan Advent Calender 2019](https://qiita.com/advent-calendar/2019/stan)で投稿した記事です。
+有馬記念を予想しました。
+
+[記事はこちら](arima.html)
+
 <br />
 <p>Copyright &copy; 2017 Keita Somatori. All rights reserved </p>
