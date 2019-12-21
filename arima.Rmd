@@ -135,7 +135,7 @@ model {
 
 さて、早速結果を見ていきましょう。以下は、各馬の$\theta_{i}$の事後予測分布です。なお、今回出走するおうまさんのうち、リスグラシューの母父American Post、母母父ミラーズメイト、アーモンドアイとサートゥルナーリアの父ロードカナロアはそれぞれの産駒において中山芝22000m以上の出走経験がありませんでした。なので、これらの馬に関しては階層パラメータからの乱数を使っています。
 
-```{r echo=FALSE, fig.align='center'}
+```{r echo=FALSE, fig.align='center', fig.height=7, fig.width=10}
 pred %>%
   mutate(umaName = recode(umaName,
                           "スカーレットカラー" = "Scarlet Color",
