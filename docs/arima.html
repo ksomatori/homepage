@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>有馬記念を血統だけで予想する</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="site_style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 61px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h2 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h3 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h4 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h5 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h6 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="me.html">About Me</a>
+</li>
+<li>
+  <a href="research.html">Research</a>
+</li>
+<li>
+  <a href="publications.html">Publications</a>
+</li>
+<li>
+  <a href="slides.html">Slides</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">有馬記念を血統だけで予想する</h1>
+
+</div>
+
+
+<p><br/> <br/></p>
+<p>こんにちは、杣取(そまとり)です。みなさん、馬券当たってますか？？</p>
+<p>この記事は<a href="https://qiita.com/advent-calendar/2019/stan">Stan Advent Calendar 2019</a>の21日目の記事として、明日行われる有馬記念の予想をしようという内容です。最近はJRAも広報活動を頑張っているので、競馬をやらない方でも有馬記念をご存じの方は多いのではないでしょうか。なお、私は日にちを間違えていて、うっかり前日予想をすることになってしまいました(ほんとは明日この記事を載せるべきだった・・・)。</p>
+<p>私は普段、機械学習を使って競馬を予想して楽しんでいますが、今回はstanのアドカレということでベイズ推定で予想をしてみたいと思います。</p>
+<p>さっそく有馬記念の出馬表を見ていきましょう。以下は自作したものなので、ちゃんとしたものが見たい方は<a href="http://www.jra.go.jp/keiba/thisweek/2019/1222_1/ss.html">こちら</a>をどうぞ。</p>
+<p><img src="umaTable.png" /></p>
+<p>さて、やはり今回の注目馬は稀代の名馬ともいわれるアーモンドアイの出走ですね。アーモンドアイは新馬戦の2着、大きな不利のあった安田記念の3着を除いて全勝しており、そもそも馬券圏外になったことが1度もない、という素晴らしいおうまさんです。</p>
+<p>その一方、アーモンドアイには大きな不安要素があります。それは何といっても有馬記念のコース形態にあります。以下にJRA提供のコース情報を載せました。</p>
+<div class="figure">
+<img src="nakayama.jpg" alt="JRAより拝借" />
+<p class="caption">JRAより拝借</p>
+</div>
+<p>御覧の通り、有馬記念が行われる中山競馬場の芝2500mはスタートからいきなりカーブ、しかもすぐにコーナーを回ることになるので先行争いは激しくなりがちです。全体的に勾配もきつく、何度も坂の上り下りがあります。要はとてもトリッキーでタフなコースといえます。</p>
+<p>要求されるのは高いパワーとスタミナ。対するアーモンドアイは、スピード能力に関しては他馬と比較して頭1つ2つ抜けていると思いますが、そのパワーとスタミナの方はどうでしょうか。初中山、初2500mということでアーモンドアイにとってもチャレンジングな1戦になることは間違いないでしょう。</p>
+<p>実は今回、アーモンドアイ以外の有力馬にとっても中山芝2500というコースへの適性が問われることになるおうまさんは多いです。今回走るおうまさんの中で、中山競馬場の芝2200m以上を走ったことのあるおうまさんは、スヴァーヴリチャード、エタリオウ、スティッフェリオ、フィエールマン、レイデオロ、キセキ、アルアイン、シュヴァルグランの8頭、ちょうど半分ですね。</p>
+<p>そうなってくると、必ずしも各場の過去の戦績だけで予想するのはイマイチかもしれません。</p>
+<p>そこで今回は、馬の血統に注目してみたいと思います。競馬はブラッドスポーツというぐらい、その血に伝わる競争能力や気性が重要なんですね。なお、血統理論を中心とした競馬予想化には<a href="https://yoso.netkeiba.com/?pid=yosoka_profile&amp;id=60">亀谷敬正</a>さんや、<a href="https://yoso.netkeiba.com/?pid=yosoka_profile&amp;id=78">栗山求</a>さんがいます。私も競馬予想の考え方としては、血統と道中位置を重視しますね。</p>
+<p>血統予想の良いところは、必ずしもそのコース・距離で走ったことがなくとも、ある程度適性を見極めることができるところにあります。例えば、パワータイプのお父さんから生まれた子は、やはりパワータイプの子になるだろう、とかそんな話ですね。だから、その子がパワーの求められるコースの出走経験がなかったとしても、おそらく得意だろう、とかを考えることができます。</p>
+<p>ただでさえ使われることがあまりない中山の芝2500m、特に今回は不安要素のあるおうまさんも多いですから、血統予想がうまくはまるかもしれません。</p>
+<p>ごちゃごちゃ書きましたが、さっそくモデルの話をして聞きます。とてもシンプルです。</p>
+<p>血統情報の使い方については、亀谷さんの血統理論に従って、4Lで見ていきます。すなわち、父、父母父、母父、母母父の4頭です。何を言っているんだ、という感じなので、以下にまとめますが、要するに3代上までのお父さんについてみていこう、という理論になります。</p>
+<ul>
+<li>父: その馬のお父さん</li>
+<li>父母父: その馬のお父さんのお母さんのお父さん</li>
+<li>母父: その馬のお母さんのお父さん</li>
+<li>母母父: その馬のお母さんのお母さんのお父さん</li>
+</ul>
+<p>ただ、父馬が決まれば当然ながら、父母父馬も同じになりますので、モデルの都合上、父、母父、母母父の3頭について考えることにします。</p>
+<p>これらの情報を使って、馬<span class="math inline">\(_{i}\)</span>が3着以内に入る確率<span class="math inline">\(\theta_{i}\)</span>を次のように考えます。</p>
+<p><span class="math inline">\(theta_{i}\)</span> = <span class="math inline">\(p^{F}_{j}*r_{1}\)</span> + <span class="math inline">\(p^{MF}_{k}*r_{2}\)</span> + <span class="math inline">\(p^{MMF}_{l}*r_{3}\)</span></p>
+<p>ここで、<span class="math inline">\(p^{F}_{j}\)</span>は父馬<span class="math inline">\(_{j}\)</span>の産駒が3着以内に入る確率を表しています。同じように、<span class="math inline">\(p^{MF}_{k}\)</span>は母父馬<em>k</em>が、<span class="math inline">\(p^{MMF}_{l}\)</span>は母父馬<span class="math inline">\(_{l}\)</span>がという感じです。</p>
+<p><em>r</em>は父馬、母父馬、母母父馬が馬iの3着内率に与える影響力を表しています。したがって、<span class="math inline">\(\Sigma_{m=0}^3 r_{m} = 1\)</span>です。</p>
+<p>それぞれの<em>p</em>には階層パラメータが付いていますが、これはあとで役に立ちます。</p>
+<p>あとは単純にこの<span class="math inline">\(\theta_{i}\)</span>をパラメータとするベルヌーイ分布から3着以内に入ったかどうかのデータを生成するモデルを立て、ベイズ推定を行います。stan コードは以下になります。</p>
+<pre class="stan"><code>data {
+  int dataNum;
+  
+  int fNum;
+  int mfNum;
+  int mmfNum;
+
+  int f [dataNum];
+  int mf [dataNum];
+  int mmf [dataNum];
+  int juni [dataNum];
+}
+
+parameters {
+  vector &lt;lower = 0, upper = 1&gt; [fNum] pF;
+  vector &lt;lower = 0, upper = 1&gt; [mfNum] pMf;
+  vector &lt;lower = 0, upper = 1&gt; [mmfNum] pMmf;
+  
+  real &lt;lower = 0, upper = 1&gt; muF;
+  real &lt;lower = 0, upper = 1&gt; muMf;
+  real &lt;lower = 0, upper = 1&gt; muMmf;
+  real &lt;lower = 0&gt; sigma;
+  
+  simplex [3] r;
+}
+
+transformed parameters {
+  vector &lt;lower = 0, upper = 1&gt; [dataNum] theta;
+  
+  for(i in 1:dataNum){
+    theta[i] = pF[f[i]]*r[1] + pMf[mf[i]]*r[2] + pMmf[mmf[i]]*r[3];
+  }
+}
+
+model {
+  pF ~ normal(muF, sigma);
+  pMf ~ normal(muMf, sigma);
+  pMmf ~ normal(muMmf, sigma);
+  
+  juni ~ bernoulli(theta);
+}</code></pre>
+<p>今回の分析では1999年以降の中山競馬場の芝2200m以上のコースで行われた競走を対象に推定を行います。だいたい、521レース、延べ7000頭ほどでした。正直、これはかなり少ないです。やはり、中山のこのぐらいの距離はあまり使われないコースなんですね。なお、血統データは<a href="https://db.netkeiba.com/?rf=navi">netkeiba</a>からスクレイピングしています。</p>
+<p>さて、早速結果を見ていきましょう。以下は、各馬の<span class="math inline">\(\theta_{i}\)</span>の事後予測分布です。なお、今回出走するおうまさんのうち、リスグラシューの母父American Post、母母父ミラーズメイト、アーモンドアイとサートゥルナーリアの父ロードカナロアはそれぞれの産駒において中山芝22000m以上の出走経験がありませんでした。なので、これらの馬に関しては階層パラメータからの乱数を使っています。</p>
+<p><img src="arima_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
+<p>なお、いろいろ頑張ったのですが、この結果は収束していません！もう時間なのでこれでいきます！！</p>
+<p>一応、推定結果はあんまり変わらないことは確認していますが、その点だけご注意ください。</p>
+<p>結果を見ると全体的に被っていて、かつ事後予測分布は広めですね。これは収束していないことのほかに、データがとても少ないことが挙げられると思います。ぱっと見、エタリオウ、スティッフェリオあたりが良い感じです。</p>
+<p>これだとわかりにくいので、事後予測平均、95%予測区間を表にしてみます。</p>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="center">馬番</th>
+<th align="left">馬名</th>
+<th align="center">事後平均</th>
+<th align="right">2.5%</th>
+<th align="right">97.5%</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="left">スカーレットカラー</td>
+<td align="center">0.1980047</td>
+<td align="right">0.1017165</td>
+<td align="right">0.3010413</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="left">スワ―ヴリチャード</td>
+<td align="center">0.2887119</td>
+<td align="right">0.2336785</td>
+<td align="right">0.3481894</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="left">エタリオウ</td>
+<td align="center">0.3023766</td>
+<td align="right">0.2615639</td>
+<td align="right">0.3481361</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="left">スティッフェリオ</td>
+<td align="center">0.3024694</td>
+<td align="right">0.2604881</td>
+<td align="right">0.3489260</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="left">フィエールマン</td>
+<td align="center">0.2930514</td>
+<td align="right">0.2418122</td>
+<td align="right">0.3467234</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="left">リスグラシュー</td>
+<td align="center">0.2887014</td>
+<td align="right">0.2362252</td>
+<td align="right">0.3479664</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="left">ワールドプレミア</td>
+<td align="center">0.2933989</td>
+<td align="right">0.2406634</td>
+<td align="right">0.3467493</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="left">レイデオロ</td>
+<td align="center">0.2464466</td>
+<td align="right">0.1962506</td>
+<td align="right">0.2990546</td>
+</tr>
+<tr class="odd">
+<td align="center">9</td>
+<td align="left">アーモンドアイ</td>
+<td align="center">0.2049642</td>
+<td align="right">0.0830613</td>
+<td align="right">0.3209637</td>
+</tr>
+<tr class="even">
+<td align="center">10</td>
+<td align="left">サートゥルナーリア</td>
+<td align="center">0.2014969</td>
+<td align="right">0.0807945</td>
+<td align="right">0.3161252</td>
+</tr>
+<tr class="odd">
+<td align="center">11</td>
+<td align="left">キセキ</td>
+<td align="center">0.2768515</td>
+<td align="right">0.1882308</td>
+<td align="right">0.3680319</td>
+</tr>
+<tr class="even">
+<td align="center">12</td>
+<td align="left">クロコスミア</td>
+<td align="center">0.3022294</td>
+<td align="right">0.2612453</td>
+<td align="right">0.3478654</td>
+</tr>
+<tr class="odd">
+<td align="center">13</td>
+<td align="left">アルアイン</td>
+<td align="center">0.2932597</td>
+<td align="right">0.2406858</td>
+<td align="right">0.3466026</td>
+</tr>
+<tr class="even">
+<td align="center">14</td>
+<td align="left">ヴェロックス</td>
+<td align="center">0.2048992</td>
+<td align="right">0.1000928</td>
+<td align="right">0.3152242</td>
+</tr>
+<tr class="odd">
+<td align="center">15</td>
+<td align="left">アエロリット</td>
+<td align="center">0.1866991</td>
+<td align="right">0.1079141</td>
+<td align="right">0.2738237</td>
+</tr>
+<tr class="even">
+<td align="center">16</td>
+<td align="left">シュヴァルグラン</td>
+<td align="center">0.2888794</td>
+<td align="right">0.2351525</td>
+<td align="right">0.3461961</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>3着以内確率が0.3を超えるおうまさんがちょうど3頭いますね。</p>
+<p>エタリオウ、スティッフェリオ、クロコスミアです！！！</p>
+<p>絶妙！！！そして値がほぼ同じ！！</p>
+<p>ということで本記事の推奨馬券はエタリオウ、スティフェリオ、クロコスミアの3連複、ずばり3-4-12でいきたいと思います！！</p>
+<p>現時点での配当は4225.3倍です！！万馬券！！</p>
+<p>参考にするかどうかは自己責任でお願いします！</p>
+<p><br/></p>
+<p>それでは、みなさまの馬券に幸あれ！</p>
+<p>Enjoy !!!</p>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
