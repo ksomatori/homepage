@@ -14,7 +14,7 @@ Rのパッケージ群**tidyverse**内に入っている**dplyr**と**purrr**を
 [Stan Advent Calender 2017](https://qiita.com/advent-calendar/2017/stan)で投稿した記事です。
 麻雀データをモデリングし、麻雀の強さ(雀力)と運を分離しています。
 
-[記事はこちら](majongAC.html)
+[記事はこちら](majong.html)
 
 ## 妄想の認知モデル
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -29,7 +29,7 @@ embed_slide("https://www.slideshare.net/SomatoriKeita/ss-103719868")
 [Stan Advent Calender 2018](https://qiita.com/advent-calendar/2018/stan)で投稿した記事です。
 ハードルポアソンモデルによって麻雀の和了巡目と中張牌の出の早さの関係を調べました。
 
-[記事はこちら](advent2018.html)
+[記事はこちら](tenhou.html)
 
 ## 心理学研究の再現性
 
